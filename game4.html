@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Apprendre les couleurs en Français</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .congolese-flag {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            width: 60px;
+            height: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #007FFF 0%, #007FFF 33.33%, #FCD116 33.33%, #FCD116 66.66%, #CE1126 66.66%, #CE1126 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .congolese-flag::after {
+            content: "★";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #FCD116;
+            font-size: 18px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+        
+        .congolese-flag::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
+            animation: flagShine 3s ease-in-out infinite;
+        }
+        
+        @keyframes flagShine {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+        
+        .game-container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 30px;
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 10px 20px;
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #555;
+        }
+        
+        .audio-player {
+            width: 100%;
+            background: #1a2a6c;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .player-title {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .play-btn {
+            background-color: #ff6b6b;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.05);
+            background-color: #ff5252;
+        }
+        
+        .play-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .play-btn i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .difficulty {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .diff-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            background: #e0e5ff;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .diff-btn.active {
+            background: #1a2a6c;
+            color: white;
+        }
+        
+        .input-section {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+        }
+        
+        .input-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        #word-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #1a2a6c;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        #word-input:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+        }
+        
+        #submit-btn {
+            padding: 15px 25px;
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        #submit-btn:hover {
+            background: #ff6b6b;
+            transform: translateY(-2px);
+        }
+        
+        .feedback {
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .feedback.correct {
+            color: #28a745;
+        }
+        
+        .feedback.incorrect {
+            color: #dc3545;
+        }
+        
+        .word-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a2a6c;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .color-display {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 15px auto;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .hint {
+            margin-top: 15px;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+        }
+        
+        .rdc-flag {
+            height: 30px;
+            width: 100%;
+            background: linear-gradient(to right, #007FFF 0%, #007FFF 33.33%, #FCD116 33.33%, #FCD116 66.66%, #CE1126 66.66%, #CE1126 100%);
+            margin-top: 20px;
+            border-radius: 3px;
+            position: relative;
+        }
+        
+        .rdc-flag::after {
+            content: "★";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #FCD116;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .audio-status {
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+        
+        /* Back Button */
+        .menu-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .menu-btn {
+            background: linear-gradient(135deg, rgba(26, 42, 108, 0.95), rgba(178, 31, 31, 0.95));
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            min-width: 160px;
+            justify-content: center;
+        }
+        
+        .menu-btn:hover {
+            background: linear-gradient(135deg, rgba(26, 42, 108, 1), rgba(178, 31, 31, 1));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .menu-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .input-container {
+                flex-direction: column;
+            }
+            
+            #submit-btn {
+                padding: 12px;
+            }
+            
+            .menu-container {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .menu-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+                gap: 6px;
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <div class="menu-container">
+            <button class="menu-btn" id="back-btn" onclick="goBackToIndex()">
+                <i class="fas fa-arrow-left"></i>
+                Retour au Menu Principal
+            </button>
+        </div>
+        
+        <div class="header">
+            <div class="congolese-flag"></div>
+            <h1>Apprendre les couleurs en Français</h1>
+            <p>Écoutez le nom et épellez-le correctement en français !</p>
+        </div>
+        
+        <div class="game-container">
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="score">0</div>
+                    <div class="stat-label">Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="streak">0</div>
+                    <div class="stat-label">Série</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="lives">3</div>
+                    <div class="stat-label">Vies</div>
+                </div>
+            </div>
+            
+            <div class="difficulty">
+                <button class="diff-btn active" data-level="easy">Facile - Couleurs Simples</button>
+                <button class="diff-btn" data-level="medium">Moyen - Couleurs Moyennes</button>
+                <button class="diff-btn" data-level="hard">Difficile - Couleurs Avancées</button>
+            </div>
+            
+            <div class="audio-player">
+                <div class="player-title">Cliquez pour entendre le mot</div>
+                <button class="play-btn" id="play-btn">
+                    <i class="fas fa-play"></i>
+                </button>
+                <div class="audio-status" id="audio-status">Prêt à jouer</div>
+            </div>
+            
+            <div class="input-section">
+                <label for="word-input">Quelle couleur avez-vous entendue ?</label>
+                <div class="input-container">
+                    <input type="text" id="word-input" placeholder="Tapez la couleur en français..." autocomplete="off">
+                    <button id="submit-btn">Valider</button>
+                </div>
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+            <div class="word-display" id="word-display"></div>
+            <div class="color-display" id="color-display"></div>
+            <div class="hint" id="hint">Indice : Apprendre les couleurs en français</div>
+            
+            <div class="rdc-flag"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // État du jeu
+            const gameState = {
+                score: 0,
+                streak: 0,
+                lives: 3,
+                currentWord: null,
+                difficulty: 'easy',
+                playing: false
+            };
+            
+            // Mapping des couleurs françaises vers les codes hexadécimaux
+            const colorMapping = {
+                "noir": "#000000",
+                "bleu": "#007FFF",
+                "rouge": "#FF0000",
+                "blanc": "#FFFFFF",
+                "vert": "#00FF00",
+                "jaune": "#FFFF00",
+                "rose": "#FFC0CB",
+                "gris": "#808080",
+                "violet": "#8000FF",
+                "orange": "#FF8000",
+                "marron": "#8B4513",
+                "turquoise": "#40E0D0",
+                "magenta": "#FF00FF",
+                "indigo": "#4B0082",
+                "beige": "#F5F5DC",
+                "doré": "#FFD700",
+                "chartreuse": "#7FFF00",
+                "fuchsia": "#FF00FF",
+                "ocre": "#CC7722",
+                "carmin": "#DC143C",
+                "sépia": "#704214",
+                "bordeaux": "#800020",
+                "lavande": "#E6E6FA",
+                "corail": "#FF7F50"
+            };
+            
+            // Couleurs françaises avec significations et indices de prononciation
+            const frenchWords = {
+                easy: [
+                    { word: "noir", meaning: "noir", pronunciation: "nwar" },
+                    { word: "bleu", meaning: "bleu", pronunciation: "bluh" },
+                    { word: "rouge", meaning: "rouge", pronunciation: "roozh" },
+                    { word: "blanc", meaning: "blanc", pronunciation: "blahn" },
+                    { word: "vert", meaning: "vert", pronunciation: "vair" },
+                    { word: "jaune", meaning: "jaune", pronunciation: "zhohn" },
+                    { word: "rose", meaning: "rose", pronunciation: "rohz" },
+                    { word: "gris", meaning: "gris", pronunciation: "gree" }
+                ],
+                medium: [
+                    { word: "violet", meaning: "violet", pronunciation: "vee-oh-lay" },
+                    { word: "orange", meaning: "orange", pronunciation: "oh-rahnzh" },
+                    { word: "marron", meaning: "marron", pronunciation: "mah-rohn" },
+                    { word: "turquoise", meaning: "turquoise", pronunciation: "tur-kwahz" },
+                    { word: "magenta", meaning: "magenta", pronunciation: "mah-zhen-tah" },
+                    { word: "indigo", meaning: "indigo", pronunciation: "ahn-dee-go" },
+                    { word: "beige", meaning: "beige", pronunciation: "bezh" },
+                    { word: "doré", meaning: "doré", pronunciation: "doh-ray" }
+                ],
+                hard: [
+                    { word: "chartreuse", meaning: "chartreuse", pronunciation: "shar-truhz" },
+                    { word: "fuchsia", meaning: "fuchsia", pronunciation: "few-sha" },
+                    { word: "ocre", meaning: "ocre", pronunciation: "ohkr" },
+                    { word: "carmin", meaning: "carmin", pronunciation: "kar-mahn" },
+                    { word: "sépia", meaning: "sépia", pronunciation: "say-pee-ah" },
+                    { word: "bordeaux", meaning: "bordeaux", pronunciation: "bor-doh" },
+                    { word: "lavande", meaning: "lavande", pronunciation: "lah-vahnd" },
+                    { word: "corail", meaning: "corail", pronunciation: "koh-rye" }
+                ]
+            };
+            
+            // Éléments DOM
+            const scoreElement = document.getElementById('score');
+            const streakElement = document.getElementById('streak');
+            const livesElement = document.getElementById('lives');
+            const playBtn = document.getElementById('play-btn');
+            const wordInput = document.getElementById('word-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const feedbackElement = document.getElementById('feedback');
+            const wordDisplay = document.getElementById('word-display');
+            const colorDisplay = document.getElementById('color-display');
+            const hintElement = document.getElementById('hint');
+            const diffButtons = document.querySelectorAll('.diff-btn');
+            const audioStatus = document.getElementById('audio-status');
+            
+            // Configuration de la synthèse vocale
+            let speechSynthesis = window.speechSynthesis;
+            let voices = [];
+            
+            // Audio pour les bonnes réponses
+            let bravoAudio = null;
+            
+            // Créer le contexte audio pour les effets sonores
+            let audioContext = null;
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                            } catch (e) {
+                    console.log('L\'API Web Audio n\'est pas supportée');
+                }
+            
+            // Initialiser la synthèse vocale
+            function initSpeech() {
+                if ('speechSynthesis' in window) {
+                                            // Attendre le chargement des voix
+                    speechSynthesis.onvoiceschanged = function() {
+                        voices = speechSynthesis.getVoices();
+                        // Essayer de trouver une voix française
+                        const frenchVoice = voices.find(voice => 
+                            voice.lang.startsWith('fr') || 
+                            voice.name.toLowerCase().includes('french')
+                        );
+                        
+                        if (frenchVoice) {
+                            audioStatus.textContent = `Voix française disponible : ${frenchVoice.name}`;
+                        } else {
+                            audioStatus.textContent = 'Utilisation de la voix par défaut pour la prononciation française';
+                        }
+                    };
+                    
+                    // Déclencher le chargement des voix
+                    speechSynthesis.getVoices();
+                } else {
+                    audioStatus.textContent = 'La synthèse vocale n\'est pas supportée dans ce navigateur';
+                    playBtn.disabled = true;
+                }
+            }
+            
+            // Jouer le son "Bravo" avec effet d'étincelle
+            function playBravoSound() {
+                if (audioContext) {
+                    // Créer l'oscillateur pour le son d'étincelle
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Effet sonore d'étincelle (haute fréquence avec décroissance rapide)
+                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(2000, audioContext.currentTime + 0.1);
+                    oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.3);
+                    
+                    oscillator.type = 'sawtooth';
+                    
+                    // Enveloppe de volume
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.3);
+                    
+                                         // Jouer "Bravo, bien joué !" en utilisant la synthèse vocale
+                     const bravoUtterance = new SpeechSynthesisUtterance("Bravo, bien joué !");
+                     bravoUtterance.lang = 'fr-FR';
+                     bravoUtterance.rate = 0.9;
+                     bravoUtterance.pitch = 1.1;
+                     bravoUtterance.volume = 1.0;
+                    
+                                         // Essayer d'utiliser une voix française pour bravo
+                    const frenchVoice = voices.find(voice => 
+                        voice.lang.startsWith('fr') || 
+                        voice.name.toLowerCase().includes('french')
+                    );
+                    
+                    if (frenchVoice) {
+                        bravoUtterance.voice = frenchVoice;
+                    }
+                    
+                    speechSynthesis.speak(bravoUtterance);
+                }
+            }
+            
+            // Initialiser le jeu
+            function initGame() {
+                initSpeech();
+                updateStats();
+                newWord();
+                
+                // Configurer les écouteurs d'événements
+                playBtn.addEventListener('click', playCurrentWord);
+                submitBtn.addEventListener('click', checkAnswer);
+                wordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') checkAnswer();
+                });
+                
+                // Boutons de difficulté
+                diffButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        diffButtons.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        gameState.difficulty = this.dataset.level;
+                        newWord();
+                    });
+                });
+            }
+            
+            // Mettre à jour l'affichage des statistiques du jeu
+            function updateStats() {
+                scoreElement.textContent = gameState.score;
+                streakElement.textContent = gameState.streak;
+                livesElement.textContent = gameState.lives;
+            }
+            
+            // Sélectionner un nouveau mot aléatoire
+            function newWord() {
+                const words = frenchWords[gameState.difficulty];
+                gameState.currentWord = words[Math.floor(Math.random() * words.length)];
+                wordDisplay.textContent = '';
+                colorDisplay.style.display = 'none';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback';
+                wordInput.value = '';
+                hintElement.textContent = `Indice : Apprendre les couleurs en français`;
+                
+                // Réinitialiser le bouton de lecture
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.disabled = false;
+                gameState.playing = false;
+                audioStatus.textContent = 'Cliquez pour entendre le mot';
+            }
+            
+            // Jouer l'audio du mot actuel en utilisant la synthèse vocale
+            function playCurrentWord() {
+                if (gameState.playing || !speechSynthesis) return;
+                
+                gameState.playing = true;
+                playBtn.disabled = true;
+                playBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                audioStatus.textContent = 'En train de parler...';
+                
+                // Arrêter toute parole en cours
+                speechSynthesis.cancel();
+                
+                // Créer l'énoncé vocal
+                const utterance = new SpeechSynthesisUtterance(gameState.currentWord.word);
+                
+                // Essayer d'utiliser une voix française si disponible
+                const frenchVoice = voices.find(voice => 
+                    voice.lang.startsWith('fr') || 
+                    voice.name.toLowerCase().includes('french')
+                );
+                
+                if (frenchVoice) {
+                    utterance.voice = frenchVoice;
+                }
+                
+                utterance.lang = 'fr-FR';
+                                    utterance.rate = 0.8; // Légèrement plus lent pour la clarté
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+                
+                // Gérer les événements de parole
+                utterance.onstart = function() {
+                    audioStatus.textContent = 'En train de parler...';
+                };
+                
+                utterance.onend = function() {
+                    audioStatus.textContent = 'Mot prononcé';
+                    setTimeout(() => {
+                        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        playBtn.disabled = false;
+                        gameState.playing = false;
+                        audioStatus.textContent = 'Cliquez pour réentendre';
+                    }, 1000);
+                };
+                
+                utterance.onerror = function(event) {
+                    console.error('Speech error:', event);
+                    audioStatus.textContent = 'Erreur lors de la lecture audio';
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    playBtn.disabled = false;
+                    gameState.playing = false;
+                };
+                
+                // Prononcer le mot
+                speechSynthesis.speak(utterance);
+            }
+            
+            // Vérifier la réponse de l'utilisateur
+            function checkAnswer() {
+                const userAnswer = wordInput.value.trim().toLowerCase();
+                const correctAnswer = gameState.currentWord.word.toLowerCase();
+                
+                if (!userAnswer) return;
+                
+                if (userAnswer === correctAnswer) {
+                    // Bonne réponse
+                    gameState.score += gameState.difficulty === 'easy' ? 10 : 
+                                      gameState.difficulty === 'medium' ? 20 : 30;
+                    gameState.streak++;
+                    
+                    feedbackElement.textContent = "Correct ! Bien joué !";
+                    feedbackElement.className = "feedback correct";
+                    wordDisplay.textContent = correctAnswer;
+                    
+                    // Afficher la couleur
+                    const colorHex = colorMapping[correctAnswer] || '#000000';
+                    colorDisplay.style.backgroundColor = colorHex;
+                    colorDisplay.style.display = 'flex';
+                    
+                    // Ajuster la couleur du texte selon la luminosité de la couleur
+                    const isLightColor = isColorLight(colorHex);
+                    colorDisplay.style.color = isLightColor ? '#000000' : '#FFFFFF';
+                    
+                                         // Jouer le son bravo avec effet d'étincelle
+                    playBravoSound();
+                    
+                                         // Effet de célébration visuelle amélioré avec des étincelles
+                    document.body.style.backgroundColor = '#d4edda';
+                     createSparkEffect();
+                     createScreenFlash();
+                     
+                    setTimeout(() => {
+                        document.body.style.backgroundColor = '';
+                     }, 800);
+                } else {
+                    // Mauvaise réponse
+                    gameState.lives--;
+                    gameState.streak = 0;
+                    
+                    feedbackElement.textContent = `Incorrect. Le mot était : ${correctAnswer}`;
+                    feedbackElement.className = "feedback incorrect";
+                    wordDisplay.textContent = correctAnswer;
+                    
+                    // Afficher la couleur même pour une mauvaise réponse
+                    const colorHex = colorMapping[correctAnswer] || '#000000';
+                    colorDisplay.style.backgroundColor = colorHex;
+                    colorDisplay.style.display = 'flex';
+                    
+                    // Ajuster la couleur du texte selon la luminosité de la couleur
+                    const isLightColor = isColorLight(colorHex);
+                    colorDisplay.style.color = isLightColor ? '#000000' : '#FFFFFF';
+                    
+                    // Effet visuel pour la mauvaise réponse
+                    document.body.style.backgroundColor = '#f8d7da';
+                    setTimeout(() => {
+                        document.body.style.backgroundColor = '';
+                    }, 300);
+                    
+                    // Vérifier si la partie est terminée
+                    if (gameState.lives <= 0) {
+                        setTimeout(() => {
+                            alert(`Partie terminée ! Votre score final : ${gameState.score}`);
+                            resetGame();
+                        }, 1000);
+                    }
+                }
+                
+                updateStats();
+                
+                // Passer au mot suivant après un délai
+                setTimeout(() => {
+                    if (gameState.lives > 0) {
+                        newWord();
+                    }
+                }, 2500);
+            }
+            
+            // Fonction pour déterminer si une couleur est claire ou sombre
+            function isColorLight(colorHex) {
+                const hex = colorHex.replace('#', '');
+                const r = parseInt(hex.substr(0, 2), 16);
+                const g = parseInt(hex.substr(2, 2), 16);
+                const b = parseInt(hex.substr(4, 2), 16);
+                
+                // Calculer la luminosité relative
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                return brightness > 128;
+            }
+            
+            // Réinitialiser l'état du jeu
+            function resetGame() {
+                gameState.score = 0;
+                gameState.streak = 0;
+                gameState.lives = 3;
+                updateStats();
+                newWord();
+            }
+            
+            // Créer l'effet visuel d'étincelle
+            function createSparkEffect() {
+                const container = document.querySelector('.container');
+                
+                // Créer plusieurs particules d'étincelles sur tout l'écran
+                for (let i = 0; i < 25; i++) {
+                    setTimeout(() => {
+                        createSpark(container, i);
+                    }, i * 40);
+                }
+                
+                // Créer une rafale supplémentaire d'étincelles
+                setTimeout(() => {
+                    for (let i = 0; i < 15; i++) {
+                        setTimeout(() => {
+                            createSpark(container, i + 25);
+                        }, i * 30);
+                    }
+                }, 200);
+            }
+            
+            function createSpark(container, index) {
+                const spark = document.createElement('div');
+                
+                // Créer différents types d'étincelles
+                const sparkTypes = [
+                    { size: '4px', color: 'linear-gradient(45deg, #ffd700, #ff6b6b, #1a2a6c)', animation: 'sparkle 1.2s ease-out forwards' },
+                    { size: '6px', color: 'linear-gradient(45deg, #ff6b6b, #1a2a6c, #ffd700)', animation: 'sparkle 1s ease-out forwards' },
+                    { size: '3px', color: 'linear-gradient(45deg, #1a2a6c, #ffd700, #ff6b6b)', animation: 'sparkle 1.5s ease-out forwards' }
+                ];
+                
+                const sparkType = sparkTypes[index % sparkTypes.length];
+                
+                spark.style.cssText = `
+                    position: absolute;
+                    width: ${sparkType.size};
+                    height: ${sparkType.size};
+                    background: ${sparkType.color};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1000;
+                    animation: ${sparkType.animation};
+                    box-shadow: 0 0 8px ${sparkType.color.split(',')[0].replace('linear-gradient(45deg, ', '')};
+                `;
+                
+                // Positionner les étincelles sur tout l'écran, pas seulement autour du conteneur
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+                
+                let x, y;
+                if (index < 25) {
+                    // Première vague : autour du conteneur
+                    const rect = container.getBoundingClientRect();
+                    x = rect.left + Math.random() * rect.width;
+                    y = rect.top + Math.random() * rect.height;
+                                    } else {
+                        // Deuxième vague : sur tout l'écran
+                    x = Math.random() * screenWidth;
+                    y = Math.random() * screenHeight;
+                }
+                
+                spark.style.left = x + 'px';
+                spark.style.top = y + 'px';
+                
+                document.body.appendChild(spark);
+                
+                // Supprimer l'étincelle après l'animation
+                setTimeout(() => {
+                    if (spark.parentNode) {
+                        spark.parentNode.removeChild(spark);
+                    }
+                }, 1500);
+            }
+            
+            // Ajouter l'animation CSS pour les étincelles
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes sparkle {
+                    0% {
+                        transform: scale(0) rotate(0deg) translateY(0px);
+                        opacity: 1;
+                    }
+                    25% {
+                        transform: scale(1.2) rotate(90deg) translateY(-10px);
+                        opacity: 0.9;
+                    }
+                    50% {
+                        transform: scale(1.5) rotate(180deg) translateY(-20px);
+                        opacity: 0.8;
+                    }
+                    75% {
+                        transform: scale(1.2) rotate(270deg) translateY(-10px);
+                        opacity: 0.6;
+                    }
+                    100% {
+                        transform: scale(0) rotate(360deg) translateY(0px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Créer l'effet de flash d'écran
+            function createScreenFlash() {
+                const flash = document.createElement('div');
+                flash.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(255, 107, 107, 0.2) 50%, transparent 100%);
+                    pointer-events: none;
+                    z-index: 999;
+                    animation: flash 0.8s ease-out forwards;
+                `;
+                
+                document.body.appendChild(flash);
+                
+                // Supprimer le flash après l'animation
+                setTimeout(() => {
+                    if (flash.parentNode) {
+                        flash.parentNode.removeChild(flash);
+                    }
+                }, 800);
+            }
+            
+            // Ajouter l'animation CSS pour le flash d'écran
+            const flashStyle = document.createElement('style');
+            flashStyle.textContent = `
+                @keyframes flash {
+                    0% {
+                        opacity: 0;
+                        transform: scale(0.5);
+                    }
+                    50% {
+                        opacity: 1;
+                        transform: scale(1.2);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: scale(1.5);
+                    }
+                }
+            `;
+            document.head.appendChild(flashStyle);
+            
+            // Back button functionality
+            function goBackToIndex() {
+                window.location.href = 'index.html';
+            }
+            
+            // Add event listener to back button as backup
+            const backBtn = document.getElementById('back-btn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    goBackToIndex();
+                });
+            }
+            
+            // Démarrer le jeu
+            initGame();
+        });
+    </script>
+</body>
+</html>

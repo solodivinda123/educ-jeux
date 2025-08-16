@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle ABC - Journal de la Tortue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #35cfe1;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo a img {
+            height: 40px;
+        }
+        
+        .nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav ul li {
+            position: relative;
+            margin: 0 10px;
+        }
+        
+        .nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav ul li a:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        .searchBar {
+            display: flex;
+            margin-left: 15px;
+        }
+        
+        .searchOuter {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .searchBox input {
+            padding: 8px 15px;
+            border: none;
+            outline: none;
+            min-width: 250px;
+        }
+        
+        .searchBtn {
+            background: #f0f8ff;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .searchBtn button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: #333;
+        }
+        
+        .siteBtn {
+            display: flex;
+            align-items: center;
+        }
+        
+        .siteBtn a {
+            margin-left: 10px;
+            padding: 8px 15px;
+            background: #35cfe1;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .siteBtn a i {
+            margin-right: 8px;
+        }
+        
+        /* Mobile Menu Styles */
+        .mobileMenu {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .hamburger {
+            width: 25px;
+            height: 20px;
+            position: relative;
+        }
+        
+        .bar {
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Enhanced Navigation Styles */
+        .nav {
+            transition: all 0.3s ease;
+        }
+        
+        .nav ul li a {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #35cfe1;
+            transition: left 0.3s ease;
+        }
+        
+        .nav ul li a:hover::before {
+            left: 0;
+        }
+        
+        /* Search Enhancement */
+        .searchBox {
+            position: relative;
+        }
+        
+        .searchBox .close {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+            display: none;
+        }
+        
+        .searchBox input:focus + .close {
+            display: block;
+        }
+        
+        .searchBox input:not(:placeholder-shown) + .close {
+            display: block;
+        }
+        
+        /* Enhanced Button Styles */
+        .siteBtn a:hover {
+            background: #2ba8b8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(53, 207, 225, 0.3);
+        }
+        
+        .siteBtn a {
+            transition: all 0.3s ease;
+        }
+        
+        /* Game Container Enhancements */
+        .gameSection {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gameSection::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .gameSection:hover::before {
+            left: 100%;
+        }
+        
+        /* Enhanced Game Cards */
+        .gameList {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gameList::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(53, 207, 225, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gameList:hover::after {
+            opacity: 1;
+        }
+        
+        /* Main Content */
+        .gamePlayContainer {
+            padding: 20px 0 40px;
+        }
+        
+        .breadCrum {
+            display: flex;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .breadCrum li {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .breadCrum li a {
+            color: #2c7fb8;
+            text-decoration: none;
+        }
+        
+        .gameListWrapper {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .gameListHead {
+            background: #2c7fb8;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .gameListHead h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .gameOptionBar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .gameContainer {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .hGameHolder {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .gameSection {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        #alpLearn {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e6f7ff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 10px solid #f3f3f3;
+            border-top: 10px solid #3498db;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #gameIframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        
+        .gameSummary {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .gameSummary h2 {
+            margin-bottom: 15px;
+            color: #2c7fb8;
+        }
+        
+        /* Similar Games */
+        .contentBlock {
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        .moduleHdd h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #2c7fb8;
+            border-bottom: 2px solid #2c7fb8;
+            padding-bottom: 10px;
+        }
+        
+        .contentSection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .gameList {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .gameList:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .echThmb_in a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+        
+        .thumbnail {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gameList:hover .thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .gThumbDesc {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .gThumbDesc_ico {
+            margin-right: 8px;
+        }
+        
+        .eThmb_ply {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        
+        .detail {
+            padding: 15px;
+        }
+        
+        .listRow {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .grade {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .likes {
+            display: flex;
+            align-items: center;
+            color: #666;
+        }
+        
+        .likes i {
+            color: #ff9800;
+            margin-right: 5px;
+        }
+        
+        .title {
+            font-weight: 600;
+            color: #2c7fb8;
+        }
+        
+        .btnPos {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .btn-green {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-green:hover {
+            background: #388E3C;
+        }
+        
+        .btn-green i {
+            margin-left: 5px;
+        }
+        
+        /* Loading state for buttons */
+        .btn.loading, button.loading {
+            position: relative;
+            color: transparent !important;
+        }
+        
+        .btn.loading::after, button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Enhanced accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles for better accessibility */
+        a:focus, button:focus, input:focus {
+            outline: 2px solid #35cfe1;
+            outline-offset: 2px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c7fb8;
+            color: white;
+            padding: 40px 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer-shape {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: #35cfe1;
+            border-radius: 50% 50% 0 0;
+        }
+        
+        .footerWrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footerLinks ul {
+            list-style: none;
+        }
+        
+        .footerLinks li {
+            margin-bottom: 10px;
+        }
+        
+        .footerLinks a {
+            color: #e0f7ff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .footerLinks a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .footerLinks strong {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .socialShare {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .socialShare img {
+            height: 50px;
+            margin-bottom: 15px;
+        }
+        
+        .awards ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .awards li {
+            margin: 0 10px;
+        }
+        
+        .awards img {
+            height: 60px;
+            border-radius: 4px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .socialNav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .socialNav li {
+            margin: 0 8px;
+        }
+        
+        .socialNav a {
+            display: block;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .socialNav a:hover {
+            background: white;
+            color: #2c7fb8;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            color: #e0f7ff;
+        }
+        
+        /* Back Button */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(26, 42, 108, 0.95), rgba(178, 31, 31, 0.95));
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            min-width: 200px;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, rgba(26, 42, 108, 1), rgba(178, 31, 31, 1));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .back-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .footerWrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .contentSection {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobileMenu {
+                display: block;
+            }
+            
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+            
+            .nav.active {
+                display: block;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav ul li {
+                margin: 0;
+            }
+            
+            .nav ul li a {
+                padding: 15px;
+                border-radius: 8px;
+            }
+            
+            .searchBar {
+                margin: 15px 0;
+                width: 100%;
+            }
+            
+            .searchBox input {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .siteBtn {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .footerWrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .contentSection {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .back-button {
+                top: 15px;
+                right: 15px;
+                padding: 12px 20px;
+                font-size: 1rem;
+                min-width: 180px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav ul li a {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .gameListHead {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contentSection {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <main style="background:#35cfe1;">
+        <div class="gamePlayContainer innerLesson">
+            <div class="container customContainer">
+
+                
+                <section class="gameListPage" id="playSection">
+                    <!-- Back Button -->
+                    <a href="index.html" class="back-button">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour au Menu Principal
+                    </a>
+                    
+                    <div class="gameListWrapper">
+                                                 <div class="gameListHead clearfix">
+                             <h1>Puzzle ABC</h1>
+                             <span class="count">174,193 Parties</span>
+                         </div>
+                        <div class="gameOptionBar">
+                            <div class="gameoptionLeft">
+                                <div class="listingHdd clearfix">
+                                    <div class="gmMnHd_bck"></div>
+                                </div>
+                            </div>
+                            <div class="gameoptionCenter">
+                                                                 <span>
+                                     <a href="javascript:void(0)" id="favIcon">
+                                         <i class="fa fa-heart-o"></i>
+                                         <span class="fa-share-alt-txt no-wrap-spce">Ajouter aux Favoris</span>
+                                     </a>
+                                 </span>
+                                 <span class="ratingBar">
+                                     <a href="javascript:void(0)">
+                                         <span class="starSmall">
+                                             <span class="smlStrTxt">Noter </span>
+                                             <span data-default="0" class="stars s-0">0 étoiles</span>
+                                         </span>
+                                     </a>
+                                 </span>
+                            </div>
+                            <div class="gameoptionRight">
+                                <ul>
+                                                                         <li class="feedBack">
+                                         <a class="fdpeeth_lnk" href="javascript:void(0);">
+                                             <i class="fa fa-group"></i>
+                                             <span class="fdpeeth_txt">Commentaires</span>
+                                         </a>
+                                     </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div id="gameBpContainer" class="gamePlayContainer clearfix">
+                            <div class="gameContainer gameContainerBT checkMstatus gmCntnrAdsEnbld" id="gameContainerID">
+                                <div class="hGameHolder">
+                                    <div class="hGameHolder_in">
+                                        <div class="gameSection plyGmeSection flyBrd fixed4Res">
+                                            <div id="alpLearn" class="noTrans">
+                                                <div id="loader" class="loader" style="display: none;"></div>
+                                                <iframe src="https://media.turtlediary.com/html5games/alphabet-balloon/index.html" height="400" width="100%" id="gameIframe" style="display: block;" frameborder="0"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                                                 <div class="gameSummary playHowto">
+                             <h2 class="text-center">Puzzle ABC</h2>
+                             <p>
+                                 Jouez au jeu Alphabet Ballon de Turtle Diary. C'est l'un des nombreux jeux ela passionnants et interactifs sur Turtle Diary
+                             </p>
+                         </div>
+                        
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script>
+        // Enhanced functionality for the ABC Puzzle game page
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const gameIframe = document.getElementById('gameIframe');
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav');
+            const searchForm = document.getElementById('searchForm');
+            const searchBox = document.getElementById('searchBox');
+            
+            // Mobile menu functionality
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            });
+            
+            // Search functionality
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const query = searchBox.value.trim();
+                if (query) {
+                    // Simulate search - in real app, this would redirect to search results
+                                         showNotification(`Recherche de: ${query}`, 'info');
+                    // Uncomment below line for actual search functionality
+                    // window.location.href = `/search-results.html?q=${encodeURIComponent(query)}`;
+                }
+            });
+            
+            // Search close button functionality
+            const searchClose = document.getElementById('searchClose');
+            if (searchClose) {
+                searchClose.addEventListener('click', function() {
+                    searchBox.value = '';
+                    searchBox.focus();
+                });
+            }
+            
+            // Auto-hide search close button
+            searchBox.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    searchClose.style.display = 'block';
+                } else {
+                    searchClose.style.display = 'none';
+                }
+            });
+            
+            // Game loading simulation
+            if (loader && gameIframe) {
+                // Show loader initially
+                loader.style.display = 'block';
+                gameIframe.style.display = 'none';
+                
+                // Simulate loading time
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                    gameIframe.style.display = 'block';
+                }, 1500);
+            }
+            
+            // Add to favorites functionality
+            const favIcon = document.getElementById('favIcon');
+            if (favIcon) {
+                favIcon.addEventListener('click', function() {
+                    const icon = favIcon.querySelector('i');
+                    if (icon.classList.contains('fa-heart-o')) {
+                        icon.classList.remove('fa-heart-o');
+                        icon.classList.add('fa-heart');
+                        icon.style.color = '#e74c3c';
+                        // Store in localStorage for persistence
+                        localStorage.setItem('abcPuzzleFavorite', 'true');
+                                                 showNotification('Ajouté aux Favoris!', 'success');
+                    } else {
+                        icon.classList.remove('fa-heart');
+                        icon.classList.add('fa-heart-o');
+                        icon.style.color = '';
+                        localStorage.removeItem('abcPuzzleFavorite');
+                                                 showNotification('Retiré des Favoris!', 'info');
+                    }
+                });
+                
+                // Check if already favorited
+                if (localStorage.getItem('abcPuzzleFavorite') === 'true') {
+                    const icon = favIcon.querySelector('i');
+                    icon.classList.remove('fa-heart-o');
+                    icon.classList.add('fa-heart');
+                    icon.style.color = '#e74c3c';
+                }
+            }
+            
+            // Enhanced star rating functionality
+            const stars = document.querySelectorAll('.stars');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const currentRating = this.getAttribute('data-default');
+                                         const newRating = prompt('Notez ce jeu (1-5 étoiles):', currentRating);
+                    
+                    if (newRating && !isNaN(newRating) && newRating >= 1 && newRating <= 5) {
+                        this.setAttribute('data-default', newRating);
+                                                 this.textContent = `${newRating} étoiles`;
+                         showNotification(`Merci d'avoir noté ce jeu ${newRating} étoiles!`, 'success');
+                    }
+                });
+            });
+            
+            // Notification system
+            function showNotification(message, type = 'info') {
+                // Remove existing notifications
+                const existingNotifications = document.querySelectorAll('.notification');
+                existingNotifications.forEach(notification => notification.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    color: white;
+                    font-weight: 500;
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                    max-width: 300px;
+                `;
+                
+                // Set background color based on type
+                switch(type) {
+                    case 'success':
+                        notification.style.backgroundColor = '#4CAF50';
+                        break;
+                    case 'error':
+                        notification.style.backgroundColor = '#f44336';
+                        break;
+                    case 'warning':
+                        notification.style.backgroundColor = '#ff9800';
+                        break;
+                    default:
+                        notification.style.backgroundColor = '#2196F3';
+                }
+                
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // Auto-remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+            
+            // Add notification animations to CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Keyboard navigation for accessibility
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close mobile menu with Escape key
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            });
+            
+            // Focus management for accessibility
+            const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+            const firstFocusableElement = document.querySelector(focusableElements);
+            const focusableContent = document.querySelectorAll(focusableElements);
+            const lastFocusableElement = focusableContent[focusableContent.length - 1];
+            
+            // Trap focus in mobile menu when open
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab' && nav.classList.contains('active')) {
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstFocusableElement) {
+                            e.preventDefault();
+                            lastFocusableElement.focus();
+                        }
+                    } else {
+                        if (document.activeElement === lastFocusableElement) {
+                            e.preventDefault();
+                            firstFocusableElement.focus();
+                        }
+                    }
+                }
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Lazy loading for images
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+            
+            // Performance optimization: Debounce search input
+            let searchTimeout;
+            searchBox.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    // Simulate search suggestions or filtering
+                    if (this.value.trim().length > 2) {
+                        showNotification(`Recherche de: ${this.value.trim()}`, 'info');
+                    }
+                }, 300);
+            });
+            
+            // Add loading state to buttons
+            document.querySelectorAll('button, .btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!this.classList.contains('loading')) {
+                        this.classList.add('loading');
+                        this.style.pointerEvents = 'none';
+                        
+                        setTimeout(() => {
+                            this.classList.remove('loading');
+                            this.style.pointerEvents = '';
+                        }, 1000);
+                    }
+                });
+            });
+            // 🔤 French Alphabet Pronunciation System
+            const frenchAlphabet = {
+                'A': 'Ah',
+                'B': 'Bé',
+                'C': 'Cé',
+                'D': 'Dé',
+                'E': 'Euh',
+                'F': 'Ef',
+                'G': 'Gé',
+                'H': 'Ash',
+                'I': 'Ee',
+                'J': 'Gee',
+                'K': 'Kah',
+                'L': 'El',
+                'M': 'Em',
+                'N': 'En',
+                'O': 'Oh',
+                'P': 'Pé',
+                'Q': 'Kü',
+                'R': 'Er',
+                'S': 'Es',
+                'T': 'Té',
+                'U': 'Ü',
+                'V': 'Vé',
+                'W': 'Double Vé',
+                'X': 'Iks',
+                'Y': 'I Grec',
+                'Z': 'Zed'
+            };
+            
+            // 🎯 French Letter Pronunciation Function
+            function pronounceLetter(letter) {
+                const upperLetter = letter.toUpperCase();
+                if (frenchAlphabet[upperLetter]) {
+                    const pronunciation = frenchAlphabet[upperLetter];
+                    speakText(`La lettre ${upperLetter} se prononce ${pronunciation}`, 'fr-FR');
+                    showNotification(`🔤 ${upperLetter} = ${pronunciation}`, 'info');
+                }
+            }
+            
+            // 🔊 French Text-to-Speech System
+            function speakText(text, lang = 'fr-FR') {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = lang;
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                    utterance.volume = 0.8;
+                    
+                    // Get French voice if available
+                    const voices = speechSynthesis.getVoices();
+                    const frenchVoice = voices.find(voice => voice.lang.includes('fr'));
+                    if (frenchVoice) {
+                        utterance.voice = frenchVoice;
+                    }
+                    
+                    speechSynthesis.speak(utterance);
+                }
+            }
+            
+            // 🎮 Interactive Alphabet Game
+            function createAlphabetGame() {
+                const gameContainer = document.getElementById('alpLearn');
+                if (gameContainer) {
+                    // Create alphabet buttons
+                    const alphabetDiv = document.createElement('div');
+                    alphabetDiv.className = 'french-alphabet-game';
+                    alphabetDiv.style.cssText = `
+                        display: grid;
+                        grid-template-columns: repeat(7, 1fr);
+                        gap: 15px;
+                        padding: 20px;
+                        max-width: 600px;
+                        margin: 0 auto;
+                    `;
+                    
+                    // Generate A-Z buttons
+                    for (let i = 65; i <= 90; i++) {
+                        const letter = String.fromCharCode(i);
+                        const button = document.createElement('button');
+                        button.textContent = letter;
+                        button.className = 'alphabet-btn';
+                        button.style.cssText = `
+                            width: 60px;
+                            height: 60px;
+                            border: none;
+                            border-radius: 50%;
+                            background: linear-gradient(45deg, #35cfe1, #2c7fb8);
+                            color: white;
+                            font-size: 24px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                        `;
+                        
+                        button.addEventListener('mouseenter', function() {
+                            this.style.transform = 'scale(1.1) rotate(5deg)';
+                            this.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+                        });
+                        
+                        button.addEventListener('mouseleave', function() {
+                            this.style.transform = 'scale(1) rotate(0deg)';
+                            this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+                        });
+                        
+                        button.addEventListener('click', function() {
+                            pronounceLetter(letter);
+                            this.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                            setTimeout(() => {
+                                this.style.background = 'linear-gradient(45deg, #35cfe1, #2c7fb8)';
+                            }, 1000);
+                        });
+                        
+                        alphabetDiv.appendChild(button);
+                    }
+                    
+                    // Add game title
+                    const title = document.createElement('h2');
+                    title.textContent = '🎯 Apprenez l\'Alphabet Français!';
+                    title.style.cssText = `
+                        text-align: center;
+                        color: #2c7fb8;
+                        margin-bottom: 20px;
+                        font-size: 28px;
+                        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+                    `;
+                    
+                    // Add instructions
+                    const instructions = document.createElement('p');
+                    instructions.textContent = 'Cliquez sur une lettre pour entendre sa prononciation française!';
+                    instructions.style.cssText = `
+                        text-align: center;
+                        color: #666;
+                        margin-bottom: 20px;
+                        font-size: 16px;
+                    `;
+                    
+                    // Add practice mode button
+                    const practiceBtn = document.createElement('button');
+                    practiceBtn.textContent = '🎮 Mode Pratique';
+                    practiceBtn.className = 'practice-btn';
+                    practiceBtn.style.cssText = `
+                        display: block;
+                        margin: 20px auto;
+                        padding: 15px 30px;
+                        background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+                        color: white;
+                        border: none;
+                        border-radius: 25px;
+                        font-size: 18px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                    `;
+                    
+                    practiceBtn.addEventListener('click', function() {
+                        startPracticeMode();
+                    });
+                    
+                    // Clear existing content and add new game
+                    gameContainer.innerHTML = '';
+                    gameContainer.appendChild(title);
+                    gameContainer.appendChild(instructions);
+                    gameContainer.appendChild(alphabetDiv);
+                    gameContainer.appendChild(practiceBtn);
+                    
+                    speakText('Jeu de l\'alphabet français créé! Cliquez sur les lettres pour apprendre!', 'fr-FR');
+                }
+            }
+            
+            // 🎯 Practice Mode - French Letter Recognition
+            function startPracticeMode() {
+                const gameContainer = document.getElementById('alpLearn');
+                if (gameContainer) {
+                    const letters = Object.keys(frenchAlphabet);
+                    let currentLetter = letters[Math.floor(Math.random() * letters.length)];
+                    let score = 0;
+                    let totalQuestions = 0;
+                    
+                    function askQuestion() {
+                        const questionDiv = document.createElement('div');
+                        questionDiv.className = 'practice-question';
+                        questionDiv.style.cssText = `
+                            text-align: center;
+                            padding: 20px;
+                        `;
+                        
+                        const question = document.createElement('h3');
+                        question.textContent = `🎯 Comment se prononce la lettre ${currentLetter}?`;
+                        question.style.cssText = `
+                            color: #2c7fb8;
+                            margin-bottom: 20px;
+                            font-size: 24px;
+                        `;
+                        
+                        const options = document.createElement('div');
+                        options.style.cssText = `
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 15px;
+                            max-width: 400px;
+                            margin: 0 auto;
+                        `;
+                        
+                        // Get 3 random wrong answers + 1 correct
+                        const correctAnswer = frenchAlphabet[currentLetter];
+                        const wrongAnswers = Object.values(frenchAlphabet).filter(answer => answer !== correctAnswer);
+                        const shuffledWrong = wrongAnswers.sort(() => 0.5 - Math.random()).slice(0, 3);
+                        const allOptions = [correctAnswer, ...shuffledWrong].sort(() => 0.5 - Math.random());
+                        
+                        allOptions.forEach(option => {
+                            const button = document.createElement('button');
+                            button.textContent = option;
+                            button.style.cssText = `
+                                padding: 15px 20px;
+                                border: none;
+                                border-radius: 10px;
+                                background: linear-gradient(45deg, #35cfe1, #2c7fb8);
+                                color: white;
+                                font-size: 16px;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            `;
+                            
+                            button.addEventListener('click', function() {
+                                if (option === correctAnswer) {
+                                    score++;
+                                    speakText(`Correct! ${currentLetter} se prononce ${correctAnswer}`, 'fr-FR');
+                                    this.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                                    showNotification('✅ Correct!', 'success');
+                                } else {
+                                    speakText(`Incorrect. ${currentLetter} se prononce ${correctAnswer}`, 'fr-FR');
+                                    this.style.background = 'linear-gradient(45deg, #f44336, #d32f2f)';
+                                    showNotification('❌ Incorrect!', 'error');
+                                }
+                                
+                                totalQuestions++;
+                                
+                                setTimeout(() => {
+                                    if (totalQuestions < 10) {
+                                        currentLetter = letters[Math.floor(Math.random() * letters.length)];
+                                        askQuestion();
+                                    } else {
+                                        showResults();
+                                    }
+                                }, 2000);
+                            });
+                            
+                            options.appendChild(button);
+                        });
+                        
+                        questionDiv.appendChild(question);
+                        questionDiv.appendChild(options);
+                        
+                        gameContainer.innerHTML = '';
+                        gameContainer.appendChild(questionDiv);
+                    }
+                    
+                    function showResults() {
+                        const percentage = Math.round((score / totalQuestions) * 100);
+                        const message = `Quiz terminé! Score: ${score}/${totalQuestions} (${percentage}%)`;
+                        
+                        speakText(message, 'fr-FR');
+                        
+                        const resultsDiv = document.createElement('div');
+                        resultsDiv.style.cssText = `
+                            text-align: center;
+                            padding: 40px;
+                        `;
+                        
+                        const resultsTitle = document.createElement('h2');
+                        resultsTitle.textContent = '🎉 Résultats du Quiz!';
+                        resultsTitle.style.cssText = `
+                            color: #2c7fb8;
+                            margin-bottom: 20px;
+                            font-size: 28px;
+                        `;
+                        
+                        const scoreText = document.createElement('p');
+                        scoreText.textContent = message;
+                        scoreText.style.cssText = `
+                            font-size: 20px;
+                            color: #666;
+                            margin-bottom: 20px;
+                        `;
+                        
+                        const restartBtn = document.createElement('button');
+                        restartBtn.textContent = '🔄 Recommencer';
+                        restartBtn.style.cssText = `
+                            padding: 15px 30px;
+                            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+                            color: white;
+                            border: none;
+                            border-radius: 25px;
+                            font-size: 18px;
+                            cursor: pointer;
+                            margin: 10px;
+                        `;
+                        
+                        const backBtn = document.createElement('button');
+                        backBtn.textContent = '🏠 Retour au Menu';
+                        backBtn.style.cssText = `
+                            padding: 15px 30px;
+                            background: linear-gradient(45deg, #35cfe1, #2c7fb8);
+                            color: white;
+                            border: none;
+                            border-radius: 25px;
+                            font-size: 18px;
+                            cursor: pointer;
+                            margin: 10px;
+                        `;
+                        
+                        restartBtn.addEventListener('click', () => {
+                            score = 0;
+                            totalQuestions = 0;
+                            currentLetter = letters[Math.floor(Math.random() * letters.length)];
+                            askQuestion();
+                        });
+                        
+                        backBtn.addEventListener('click', createAlphabetGame);
+                        
+                        resultsDiv.appendChild(resultsTitle);
+                        resultsDiv.appendChild(scoreText);
+                        resultsDiv.appendChild(restartBtn);
+                        resultsDiv.appendChild(backBtn);
+                        
+                        gameContainer.innerHTML = '';
+                        gameContainer.appendChild(resultsDiv);
+                    }
+                    
+                    askQuestion();
+                }
+            }
+            
+            // 🚀 Initialize French Alphabet Game
+            setTimeout(() => {
+                createAlphabetGame();
+            }, 2000);
+            
+            // 🎉 Welcome Message in French
+            setTimeout(() => {
+                speakText('Bienvenue dans le Puzzle ABC! Prêt à apprendre l\'alphabet français?', 'fr-FR');
+                showNotification('🎮 Bienvenue dans le Puzzle ABC!', 'success');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
